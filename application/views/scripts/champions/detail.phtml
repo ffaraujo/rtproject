@@ -21,9 +21,18 @@
     <?php foreach($this->lastGames['games'] as $game): ?>
     <?php if($game['championId'] == $this->champion['id']): ?>
     <div class="champ-game">
-        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 64px; height: 64px;" />
+        <img class="champ-square-info fleft" 
+             src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$this->champion['key']}.png"; ?>" 
+             alt="<?php echo $this->champion['name']; ?>" style="display: inline-block; width: 64px; height: 64px;" />
+        <img src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(14)}"; ?>" alt="spell #1" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
         <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
         <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
+        <span style="vertical-align: bottom;"><em>Coop vs AI</em> - <strong>K/D/A:</strong> 17/2/6 - <strong>CS:</strong> 241</span>
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
+        <span style="vertical-align: bottom;"><strong>Data:</strong> 22/01/2014 - <strong>Duração:</strong> 45:31</span>
     </div>
     <?php endif; ?>
     <?php endforeach; ?>

@@ -30,6 +30,8 @@ class ChampionsController extends GeneralController {
         else
             $this->view->lastGames = array();
         
+        $this->view->spellMapper = new Application_Model_SpellMapper();
+        
         //$g = $gMapper->fetchByChampion('3799295', 25);
         //$g = $gMapper->find('446081949');
     }

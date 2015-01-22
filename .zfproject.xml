@@ -74,6 +74,7 @@
         <modelFile modelName="SummonerMapper"/>
         <modelFile modelName="Realm"/>
         <modelFile modelName="GamesMapper"/>
+        <modelFile modelName="SpellMapper"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>

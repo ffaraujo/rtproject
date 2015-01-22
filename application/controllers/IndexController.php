@@ -8,6 +8,7 @@ class IndexController extends GeneralController {
      * Games IDs: 446081949, 455132204
      * @TODO cache
      * @TODO ultimas lutas por campeao
+     * @TODO implementar save de imagens
      */
     
     public function init() {

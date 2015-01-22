@@ -13,9 +13,9 @@
 
         <?php foreach ($this->pagesInRange as $page): ?>
             <?php if ($this->current != $page): ?> 
-                <li><a href="<?php echo $this->url(array('pag' => $page)); ?>" title="Página <? echo $page ?>"><? echo $page ?></a></li>
+                <li><a href="<?php echo $this->url(array('pag' => $page)); ?>" title="Página <?php echo $page ?>"><?php echo $page ?></a></li>
             <?php else: ?>
-                <li class="selected"><a href=""><? echo $page ?></a></li>
+                <li class="selected"><a href=""><?php echo $page ?></a></li>
             <?php endif; ?> 
         <?php endforeach; ?>
 
