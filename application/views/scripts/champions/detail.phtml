@@ -1,0 +1,31 @@
+<div class="champ-title grid_12">
+    <h2><?php echo $this->champion['name']; ?></h2>
+    <h3><em><?php echo $this->champion['title']; ?></em></h3>
+</div>
+<br class="clear" />
+<div id="view-content" class="grid_9">
+    <p class="champ-lore">
+        <img class="champ-square-info fleft" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$this->champion['key']}.png"; ?>" alt="<?php echo $this->champion['name']; ?>" />
+        <?php echo $this->champion['lore']; ?>
+    </p>
+</div>
+<div class="grid_3">
+    <?php $n = rand(0, (count($this->champion['skins']) - 1)); ?>
+    <img class="champ-load" src="<?php echo $this->realm->getCdn() . "/img/champion/loading/{$this->champion['key']}_$n.jpg"; ?>" alt="<?php echo $this->champion['name']; ?>" />
+</div>
+<br class="clear" />
+<?php if(true): ?>
+<div class="champ-last-games">
+    <h3>Últimos Jogos</h3>
+    <br class="clear" />
+    <?php foreach($this->lastGames['games'] as $game): ?>
+    <?php if($game['championId'] == $this->champion['id']): ?>
+    <div class="champ-game">
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 64px; height: 64px;" />
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
+        <img src="<?php echo $this->baseUrl() . '/images/Sona.png'; ?>" alt="champ" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
+    </div>
+    <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>

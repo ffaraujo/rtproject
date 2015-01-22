@@ -1,0 +1,25 @@
+<!-- Champions (Splash Art): 
+          The number at the end of the image corresponds to the skin (0 is the default skin)
+          http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_0.jpg
+
+          Champions (Loading Screen Art):
+          The number at the end of the image corresponds to the skin (0 is the default skin)
+          http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Aatrox_0.jpg
+
+          Champions (Square):
+          http://ddragon.leagueoflegends.com/cdn/4.20.1/img/champion/Aatrox.png -->
+<div id="view-content" class="grid_12">
+    <table>
+        <tr>
+            <?php $i = 1; ?>
+            <?php foreach($this->champions as $champion): ?>
+            <td>
+                <a href="<?php echo $this->url(array('id' => $champion['key'].'-'.$champion['id']), 'champion', true); ?>">
+                    <img class="champ-square" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$champion['key']}.png"; ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name']; ?>" />
+                </a>
+            </td>
+            <?php if(($i % 10) == 0) echo '</tr><tr>'; $i++; ?>
+            <?php endforeach; ?>
+        </tr>
+    </table>
+</div>
