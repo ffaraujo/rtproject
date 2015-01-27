@@ -35,7 +35,7 @@ class Application_Model_GamesMapper {
             $data = stream_get_contents($handle);
             $games = json_decode($data, true);
             fclose($handle);
-            exit(var_dump($games['games'][0]));
+            //exit(var_dump($games['games'][0]));
             return $games;
         } else {
             return false;

@@ -1,0 +1,31 @@
+<div class="grid_12">
+    <p>View script for controller <b>Index</b> and script/action name <b>Index</b></p>
+    <?php if(!$this->info): ?>
+    <style>
+        table.teste {width: 100%;}
+        table.teste td {border: 1px solid black; text-align: center;}
+    </style>
+    <table class="teste" cellpadding="2" cellspacing="2">
+        <tr>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ashe_3.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ashe_3.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Blitzcrank_3.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Blitzcrank_3.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/FiddleSticks_3.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/FiddleSticks_3.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Fiora_2.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Fiora_2.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Leona_4.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Leona_4.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/MissFortune_4.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/MissFortune_4.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/MasterYi_2.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/MasterYi_2.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Sona_2.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Sona_2.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Sona_5.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Sona_5.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+            <td><a href="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Tristana_1.jpg"><img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Tristana_1.jpg" alt="" style="width: 15%; height: 15%" /></a></td>
+        </tr>
+    </table>
+    <?php else: ?>
+        <?php //var_dump($this->master['recommended'][1]); ?>
+        <?php var_dump($this->master); ?>
+        <?php foreach($this->masterItems as $item): ?>
+            <?php echo $item . '<br />'; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>

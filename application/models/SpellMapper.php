@@ -28,6 +28,9 @@ class Application_Model_SpellMapper {
         }
     }
 
+    /*
+     * @TODO corrigir para o modelo que foi feito em champ
+     */
     public function getImage($id) {
         $spell = $this->find($id);
         if (!$spell) {

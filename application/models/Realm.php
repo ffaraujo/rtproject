@@ -13,6 +13,7 @@ class Application_Model_Realm {
             $info = json_decode($data, true);
             fclose($handle);
             $this->version = $info['v'];
+            $this->version = '0.151.2';
             $this->dd = $info['dd'];
             $this->cdn = $info['cdn'];
         }

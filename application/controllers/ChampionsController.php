@@ -10,7 +10,13 @@ class ChampionsController extends GeneralController {
 
     public function indexAction() {
         $mapper = new Application_Model_ChampionMapper();
-        $this->view->champions = $mapper->fetchAll();
+        $cs = $this->view->champions = $mapper->fetchAll();
+        $newCs = array();
+        foreach ($cs as $c) {
+            $newCs[$c['id']] = $c;
+        }
+        ksort($newCs, SORT_NUMERIC);
+        $this->view->champions = $newCs;
     }
 
     public function detailAction() {
@@ -20,7 +26,7 @@ class ChampionsController extends GeneralController {
             $this->_redirect('/champions');
         }
 
-        $mapper = new Application_Model_ChampionMapper();
+        $mapper = $this->view->championMapper = new Application_Model_ChampionMapper();
         $this->view->champion = $mapper->find($id);
         
         $gamesMapper = new Application_Model_GamesMapper();
