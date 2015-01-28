@@ -11,12 +11,13 @@ class ChampionsController extends GeneralController {
     public function indexAction() {
         $mapper = new Application_Model_ChampionMapper();
         $cs = $this->view->champions = $mapper->fetchAll();
-        $newCs = array();
+        /*$newCs = array();
         foreach ($cs as $c) {
             $newCs[$c['id']] = $c;
         }
         ksort($newCs, SORT_NUMERIC);
-        $this->view->champions = $newCs;
+        $cs = $newCs; */
+        $this->view->champions = $cs;
     }
 
     public function detailAction() {
@@ -30,16 +31,15 @@ class ChampionsController extends GeneralController {
         $this->view->champion = $mapper->find($id);
         
         $gamesMapper = new Application_Model_GamesMapper();
-        $games = $gamesMapper->fetchRecent('3799295');
+        //400463, 3799295
+        $games = $gamesMapper->fetchRecent('400463');
+        //exit(var_dump($games['games'][0]));
         if ($games)
             $this->view->lastGames = $games;
         else
             $this->view->lastGames = array();
         
         $this->view->spellMapper = new Application_Model_SpellMapper();
-        
-        //$g = $gMapper->fetchByChampion('3799295', 25);
-        //$g = $gMapper->find('446081949');
     }
 
 }

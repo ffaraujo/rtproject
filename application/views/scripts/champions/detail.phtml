@@ -20,19 +20,31 @@
     <br class="clear" />
     <?php foreach($this->lastGames['games'] as $game): ?>
     <?php if($game['championId'] == $this->champion['id']): ?>
-    <div class="champ-game">
-        <img class="champ-square-info fleft" 
-             src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$this->champion['key']}.png"; ?>" 
-             alt="<?php echo $this->champion['name']; ?>" style="display: inline-block; width: 64px; height: 64px;" />
-        <img src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(14)}"; ?>" alt="spell #1" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
-        <img src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(4)}"; ?>" alt="spell #2" style="display: inline-block; width: 20px; height: 20px; vertical-align: bottom;" />
-        <span style="vertical-align: bottom;"><em>Coop vs AI</em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php echo $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
-        <?php foreach($game['fellowPlayers'] as $fellow): ?>
-        <img src="<?php echo $this->championMapper->getChampionSquareImg($fellow['championId'], $this->realm); ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
-        <?php endforeach; ?>
-        <?php $dt = Zend_Date::now(); $dt->setTimestamp(($game['createDate']/1000)); ?>
-        <span style="vertical-align: bottom;"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
-    </div>
+    <table class="champ-game">
+        <tr>
+            <td>
+                <img class="champ-square-info" 
+                     src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$this->champion['key']}.png"; ?>" 
+                     alt="<?php echo $this->champion['name']; ?>" />
+                <img class="champ-game-spell" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(14)}"; ?>" alt="spell #1" />
+                <img class="champ-game-spell" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(4)}"; ?>" alt="spell #2" />
+            </td>
+            <td>
+                <span style="vertical-align: bottom;"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
+            </td>
+            <td>
+                <?php foreach($game['fellowPlayers'] as $fellow): ?>
+                <?php if($fellow['teamId'] == $game['teamId']): ?>
+                <img src="<?php echo $this->championMapper->getChampionSquareImg($fellow['championId'], $this->realm); ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
+                <?php endif; ?>
+                <?php endforeach; ?>
+            </td>
+            <td>
+                <?php $dt = Zend_Date::now(); $dt->setTimestamp(($game['createDate']/1000)); ?>
+                <span style="vertical-align: bottom;"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
+            </td>
+        </tr>
+    </table>
     <br class="clear" />
     <?php endif; ?>
     <?php endforeach; ?>

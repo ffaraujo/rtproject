@@ -4,7 +4,7 @@ class IndexController extends GeneralController {
 
     /*
      * @TODO calcular proporcao KDA / W-L
-     * Summoner ID: 3799295, 4365847, 13160847
+     * Summoner ID: 3799295, 4365847, 13160847, 400463
      * Games IDs: 446081949, 455132204
      * @TODO cache
      * @TODO ultimas lutas por campeao

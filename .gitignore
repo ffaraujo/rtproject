@@ -23,3 +23,6 @@ $RECYCLE.BIN/
 
 #index with key
 public/index.php
+
+#upload content
+public/upload/*
