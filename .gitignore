@@ -26,3 +26,6 @@ public/index.php
 
 #upload content
 public/upload/*
+
+#cache content
+cache/*

@@ -15,7 +15,7 @@
             <?php foreach($this->champions as $champion): ?>
             <td>
                 <a href="<?php echo $this->url(array('id' => $champion['key'].'-'.$champion['id']), 'champion', true); ?>">
-                    <img class="champ-square" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$champion['key']}.png"; ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name']; ?>" />
+                    <img class="champ-square" src="<?php echo $this->championMapper->getChampionSquareImg($champion['id'], $this->realm); ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name']; ?>" />
                 </a>
             </td>
             <?php if(($i % 10) == 0) echo '</tr><tr>'; $i++; ?>

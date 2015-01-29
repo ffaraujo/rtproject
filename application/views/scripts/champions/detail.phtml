@@ -1,3 +1,4 @@
+<?php $spellMapper = new Application_Model_SpellMapper(); ?>
 <div class="champ-title grid_12">
     <h2><?php echo $this->champion['name']; ?></h2>
     <h3><em><?php echo $this->champion['title']; ?></em></h3>
@@ -5,13 +6,13 @@
 <br class="clear" />
 <div id="view-content" class="grid_9">
     <p class="champ-lore">
-        <img class="champ-square-info fleft" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$this->champion['key']}.png"; ?>" alt="<?php echo $this->champion['name']; ?>" />
+        <img class="champ-square-info fleft" src="<?php echo $this->championMapper->getChampionSquareImg($this->champion['id'], $this->realm); ?>" alt="<?php echo $this->champion['name']; ?>" />
         <?php echo $this->champion['lore']; ?>
     </p>
 </div>
 <div class="grid_3">
     <?php $n = rand(0, (count($this->champion['skins']) - 1)); ?>
-    <img class="champ-load" src="<?php echo $this->realm->getCdn() . "/img/champion/loading/{$this->champion['key']}_$n.jpg"; ?>" alt="<?php echo $this->champion['name']; ?>" />
+    <img class="champ-load" src="<?php echo $this->championMapper->getChampionLoadImg($this->champion['id'], $n, $this->realm); ?>" alt="<?php echo $this->champion['name']; ?>" />
 </div>
 <br class="clear" />
 <?php if(true): ?>
@@ -24,24 +25,24 @@
         <tr>
             <td>
                 <img class="champ-square-info" 
-                     src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/champion/{$this->champion['key']}.png"; ?>" 
+                     src="<?php echo $this->championMapper->getChampionSquareImg($this->champion['id'], $this->realm); ?>" 
                      alt="<?php echo $this->champion['name']; ?>" />
-                <img class="champ-game-spell" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(14)}"; ?>" alt="spell #1" />
-                <img class="champ-game-spell" src="<?php echo $this->realm->getCdn() . '/' . $this->realm->getVersion() . "/img/spell/{$this->spellMapper->getImage(4)}"; ?>" alt="spell #2" />
+                <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell1'], $this->realm); ?>" alt="spell #1" />
+                <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell2'], $this->realm); ?>" alt="spell #2" />
             </td>
             <td>
-                <span style="vertical-align: bottom;"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
+                <span class="champ-info-stats"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
             </td>
             <td>
                 <?php foreach($game['fellowPlayers'] as $fellow): ?>
                 <?php if($fellow['teamId'] == $game['teamId']): ?>
-                <img src="<?php echo $this->championMapper->getChampionSquareImg($fellow['championId'], $this->realm); ?>" alt="champ" style="display: inline-block; width: 32px; height: 32px;" />
+                <img class="champ-fellow-square" src="<?php echo $this->championMapper->getChampionSquareImg($fellow['championId'], $this->realm); ?>" alt="champ" />
                 <?php endif; ?>
                 <?php endforeach; ?>
             </td>
             <td>
                 <?php $dt = Zend_Date::now(); $dt->setTimestamp(($game['createDate']/1000)); ?>
-                <span style="vertical-align: bottom;"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
+                <span class="champ-info-time"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
             </td>
         </tr>
     </table>

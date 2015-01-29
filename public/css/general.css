@@ -125,15 +125,17 @@ span.menu-item a:hover {
 }
 
 /* ---- IMGS ---- */
-img.champ-square {width: 20px; height: 20px; margin: 0 2px 2px 0;}
+img.champ-square {width: 64px; height: 64px; margin: 0 2px 2px 0;}
 img.champ-square-info {width: 64px; height: 64px; margin: 0 10px 10px 0; display: inline-block; vertical-align: bottom;}
 img.champ-game-spell {display: inline-block; width: 20px; height: 20px; vertical-align: bottom;}
 img.champ-load {width: 200px;}
+img.champ-fellow-square {display: inline-block; width: 32px; height: 32px;}
 
 
 /* ---- TEXTS ---- */
 p.log {font: 12px "Courier New";}
 p.champ-lore {text-align: justify;}
+span.champ-info-stats, span.champ-info-time {vertical-align: bottom;}
 
 /* ---- OTHERS ---- */
 .left {text-align: left;}

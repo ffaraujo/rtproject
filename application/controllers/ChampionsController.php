@@ -9,15 +9,19 @@ class ChampionsController extends GeneralController {
     }
 
     public function indexAction() {
-        $mapper = new Application_Model_ChampionMapper();
-        $cs = $this->view->champions = $mapper->fetchAll();
-        /*$newCs = array();
-        foreach ($cs as $c) {
-            $newCs[$c['id']] = $c;
+        $mapper = $this->view->championMapper = new Application_Model_ChampionMapper();
+        $this->view->champions = $mapper->fetchAll();
+
+        if ($this->_hasParam('id')) {
+            $cs = $this->view->champions;
+            $newCs = array();
+            foreach ($cs as $c) {
+                $newCs[$c['id']] = $c;
+            }
+            ksort($newCs, SORT_NUMERIC);
+            $cs = $newCs;
+            $this->view->champions = $cs;
         }
-        ksort($newCs, SORT_NUMERIC);
-        $cs = $newCs; */
-        $this->view->champions = $cs;
     }
 
     public function detailAction() {
@@ -29,16 +33,19 @@ class ChampionsController extends GeneralController {
 
         $mapper = $this->view->championMapper = new Application_Model_ChampionMapper();
         $this->view->champion = $mapper->find($id);
-        
+
         $gamesMapper = new Application_Model_GamesMapper();
         //400463, 3799295
-        $games = $gamesMapper->fetchRecent('400463');
-        //exit(var_dump($games['games'][0]));
+        if ($this->_hasParam('sum'))
+            $games = $gamesMapper->fetchRecent($this->_getParam('sum'));
+        else
+            $games = $gamesMapper->fetchRecent('400463');
+        
         if ($games)
             $this->view->lastGames = $games;
         else
             $this->view->lastGames = array();
-        
+
         $this->view->spellMapper = new Application_Model_SpellMapper();
     }
 
