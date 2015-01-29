@@ -3,15 +3,22 @@
 class Application_Model_GamesMapper {
 
     public function find($id) {
-        $handle = fopen("https://br.api.pvp.net/api/lol/br/v2.2/match/$id?api_key=" . API_KEY, 'rb');
-        if ($handle) {
-            $data = stream_get_contents($handle);
-            $match = json_decode($data, true);
-            fclose($handle);
-            exit(var_dump($match));
-            return $match;
+        $cacheManager = new Cache(3600 * 24 * 2);
+        $match = $cacheManager->getJson("findGame$id");
+
+        if (!$match) {
+            $handle = fopen("https://br.api.pvp.net/api/lol/br/v2.2/match/$id?api_key=" . API_KEY, 'rb');
+            if ($handle) {
+                $data = stream_get_contents($handle);
+                $match = json_decode($data, true);
+                fclose($handle);
+                $cacheManager->saveJson("findGame$id", $match);
+                return $match;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return $match;
         }
     }
 

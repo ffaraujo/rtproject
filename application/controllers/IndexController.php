@@ -4,7 +4,7 @@ class IndexController extends GeneralController {
 
     /*
      * @TODO calcular proporcao KDA / W-L
-     * Summoner ID: 3799295, 4365847, 13160847, 400463
+     * Summoner ID: 3799295, 4365847, 13160847, 400463, 13294089
      * Games IDs: 446081949, 455132204
      * @TODO cache
      * @TODO ultimas lutas por campeao
@@ -64,9 +64,14 @@ class IndexController extends GeneralController {
         );
         $cm = new Application_Model_ChampionMapper();
         //$im = $cm->saveImage($this->_getParam('champ', 11), $this->_getParam('img', false));
-        foreach ($versions as $version) {
+        /*foreach ($versions as $version) {
             set_time_limit(60);
             echo $cm->saveThumb($this->_getParam('champ', 11), $version) . '<br />';
+        }*/
+        $cs = $cm->fetchAll();
+        $realm = new Application_Model_Realm();
+        foreach ($cs as $c) {
+            var_dump($cm->getChampionLoadImg($c['id'], 1, $realm));
         }
         exit();
         //exit(var_dump($im));

@@ -3,7 +3,7 @@
 class Application_Model_ChampionMapper {
 
     public function find($id) {
-        $cacheManager = new Cache(172800);
+        $cacheManager = new Cache(3600 * 24 * 2);
         $champion = $cacheManager->getJson("findChampion$id");
         if (!$champion) {
             $handle = fopen("https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion/$id?champData=all&api_key=" . API_KEY, 'rb');
@@ -22,7 +22,7 @@ class Application_Model_ChampionMapper {
     }
 
     public function fetchAll() {
-        $cacheManager = new Cache(172800);
+        $cacheManager = new Cache(3600 * 24 * 2);
         $champions = $cacheManager->getJson('fetchAllChampions');
         if (!$champions) {
             $handle = fopen('https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion?champData=image&api_key=' . API_KEY, 'rb');
@@ -42,21 +42,21 @@ class Application_Model_ChampionMapper {
     }
 
     public function getChampionSquareImg($id, $realm) {
-        if (!file_exists(PATH_UPLOAD . "c_thumbs/$id.png")) {
+        if (!file_exists(PATH_UPLOAD . "c_thumbs/$key.png")) {
             if (!$this->saveThumb($id, $realm)) {
                 return '';
             }
         }
-        return "/upload/c_thumbs/$id.png";
+        return "/upload/c_thumbs/$key.png";
     }
     
     public function getChampionLoadImg($id, $n, $realm) {
-        if (!file_exists(PATH_UPLOAD . "skins/".$id."_$n.jpg")) {
+        if (!file_exists(PATH_UPLOAD . "skins/".$key."_$n.jpg")) {
             if (!$this->saveImage($id, $n, $realm)) {
                 return '';
             }
         }
-        return "/upload/skins/".$id."_$n.jpg";
+        return "/upload/skins/".$key."_$n.jpg";
     }
 
     public function fetchItemsByChampion($id) {
@@ -97,7 +97,7 @@ class Application_Model_ChampionMapper {
         if ($handle) {
             $data = stream_get_contents($handle);
             fclose($handle);
-            $handle2 = @fopen($path . $id . "_$n.jpg", 'wb');
+            $handle2 = @fopen($path . $champ['key'] . "_$n.jpg", 'wb');
             if ($handle2) {
                 fwrite($handle2, $data);
             }
@@ -128,7 +128,7 @@ class Application_Model_ChampionMapper {
         if ($handle) {
             $data = stream_get_contents($handle);
             fclose($handle);
-            $handle2 = @fopen($path . $id . '.png', 'wb');
+            $handle2 = @fopen($path . $file, 'wb');
             if ($handle2) {
                 fwrite($handle2, $data);
             }
