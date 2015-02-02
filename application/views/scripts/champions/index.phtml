@@ -9,13 +9,20 @@
           Champions (Square):
           http://ddragon.leagueoflegends.com/cdn/4.20.1/img/champion/Aatrox.png -->
 <div id="view-content" class="grid_12">
+    <?php if($this->sortById): ?>
+    <a href="<?php echo $this->url(array('id' => 'true'), 'default', false); ?>" class="sutil">Sort by ID</a>
+    <br class="clear" />
+    <?php else: ?>
+    <a href="<?php echo $this->url(array('controller' => 'champions'), 'default', true); ?>" class="sutil">Sort by Name</a>
+    <br class="clear" />
+    <?php endif; ?>
     <table>
         <tr>
             <?php $i = 1; ?>
             <?php foreach($this->champions as $champion): ?>
             <td>
                 <a href="<?php echo $this->url(array('id' => $champion['key'].'-'.$champion['id']), 'champion', true); ?>">
-                    <img class="champ-square" src="<?php echo $this->championMapper->getChampionSquareImg($champion['id'], $this->realm); ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name']; ?>" />
+                    <img class="champ-square" src="<?php echo $this->baseUrl() . $this->championMapper->getChampionSquareImg($champion['id'], $this->realm); ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name']; ?>" />
                 </a>
             </td>
             <?php if(($i % 10) == 0) echo '</tr><tr>'; $i++; ?>

@@ -47,24 +47,23 @@ class Application_Model_SpellMapper {
      */
 
     public function getImage($id, $realm) {
-        if (!file_exists(PATH_UPLOAD . "spells/$id.png")) {
-            if (!$this->saveImage($id, $realm)) {
+        $spell = $this->find($id);
+        if (!$spell)
+            return '';
+        if (!file_exists(PATH_UPLOAD . "spells/{$spell['image']['full']}")) {
+            if (!$this->saveImage($spell, $realm)) {
                 return '';
             }
         }
-        return "/upload/spells/$id.png";
+        return "/upload/spells/{$spell['image']['full']}";
     }
-    
-    public function saveImage($id, $realm) {
+
+    public function saveImage($spell, $realm) {
         set_time_limit(120);
         $path = PATH_UPLOAD . "spells/";
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
-
-        $spell = $this->find($id);
-        if ($spell === false)
-            return false;
 
         if (!$realm) {
             $realm = new Application_Model_Realm();
@@ -75,7 +74,7 @@ class Application_Model_SpellMapper {
         if ($handle) {
             $data = stream_get_contents($handle);
             fclose($handle);
-            $handle2 = @fopen($path . $id . '.png', 'wb');
+            $handle2 = @fopen($path . $file, 'wb');
             if ($handle2) {
                 fwrite($handle2, $data);
             }

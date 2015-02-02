@@ -21,6 +21,9 @@ class ChampionsController extends GeneralController {
             ksort($newCs, SORT_NUMERIC);
             $cs = $newCs;
             $this->view->champions = $cs;
+            $this->view->sortById = false;
+        } else {
+            $this->view->sortById = true;
         }
     }
 
@@ -40,7 +43,7 @@ class ChampionsController extends GeneralController {
             $games = $gamesMapper->fetchRecent($this->_getParam('sum'));
         else
             $games = $gamesMapper->fetchRecent('400463');
-        
+
         if ($games)
             $this->view->lastGames = $games;
         else

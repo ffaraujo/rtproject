@@ -42,21 +42,27 @@ class Application_Model_ChampionMapper {
     }
 
     public function getChampionSquareImg($id, $realm) {
-        if (!file_exists(PATH_UPLOAD . "c_thumbs/$key.png")) {
-            if (!$this->saveThumb($id, $realm)) {
+        $champ = $this->find($id);
+        if (!$champ)
+            return '';
+        if (!file_exists(PATH_UPLOAD . "c_thumbs/{$champ['image']['full']}")) {
+            if (!$this->saveThumb($champ, $realm)) {
                 return '';
             }
         }
-        return "/upload/c_thumbs/$key.png";
+        return "/upload/c_thumbs/{$champ['image']['full']}";
     }
-    
+
     public function getChampionLoadImg($id, $n, $realm) {
-        if (!file_exists(PATH_UPLOAD . "skins/".$key."_$n.jpg")) {
-            if (!$this->saveImage($id, $n, $realm)) {
+        $champ = $this->find($id);
+        if (!$champ)
+            return '';
+        if (!file_exists(PATH_UPLOAD . "skins/" . $champ['key'] . "_$n.jpg")) {
+            if (!$this->saveImage($champ, $n, $realm)) {
                 return '';
             }
         }
-        return "/upload/skins/".$key."_$n.jpg";
+        return "/upload/skins/" . $champ['key'] . "_$n.jpg";
     }
 
     public function fetchItemsByChampion($id) {
@@ -78,16 +84,12 @@ class Application_Model_ChampionMapper {
         return $items;
     }
 
-    public function saveImage($id, $n = false, $realm = false) {
+    public function saveImage($champ, $n = false, $realm = false) {
         set_time_limit(120);
         $path = PATH_UPLOAD . "skins/";
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
-
-        $champ = $this->find($id);
-        if ($champ === false)
-            return false;
 
         if (!$n)
             $n = 0;
@@ -97,7 +99,7 @@ class Application_Model_ChampionMapper {
         if ($handle) {
             $data = stream_get_contents($handle);
             fclose($handle);
-            $handle2 = @fopen($path . $champ['key'] . "_$n.jpg", 'wb');
+            $handle2 = @fopen($path . $file, 'wb');
             if ($handle2) {
                 fwrite($handle2, $data);
             }
@@ -108,16 +110,12 @@ class Application_Model_ChampionMapper {
         }
     }
 
-    public function saveThumb($id, $realm = false) {
+    public function saveThumb($champ, $realm = false) {
         set_time_limit(120);
         $path = PATH_UPLOAD . "c_thumbs/";
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
-
-        $champ = $this->find($id);
-        if ($champ === false)
-            return false;
 
         if (!$realm) {
             $realm = new Application_Model_Realm();
