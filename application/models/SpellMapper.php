@@ -3,7 +3,7 @@
 class Application_Model_SpellMapper {
 
     public function find($id) {
-        $cacheManager = new Cache(172800);
+        $cacheManager = new Cache(3600 * 24 * 8);
         $spell = $cacheManager->getJson("findSpell$id");
         if (!$spell) {
             $handle = fopen("https://br.api.pvp.net/api/lol/static-data/br/v1.2/summoner-spell/$id?spellData=all&api_key=" . API_KEY, 'rb');
@@ -22,7 +22,7 @@ class Application_Model_SpellMapper {
     }
 
     public function fetchAll() {
-        $cacheManager = new Cache(172800);
+        $cacheManager = new Cache(3600 * 24 * 8);
         $spells = $cacheManager->getJson("fetchAllSpells");
         if (!$spells) {
             $handle = fopen('https://br.api.pvp.net/api/lol/static-data/br/v1.2/summoner-spell?spellData=all&api_key=' . API_KEY, 'rb');

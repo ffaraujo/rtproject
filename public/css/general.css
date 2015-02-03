@@ -130,6 +130,7 @@ img.champ-square-info {width: 64px; height: 64px; margin: 0 10px 10px 0; display
 img.champ-game-spell {display: inline-block; width: 20px; height: 20px; vertical-align: bottom;}
 img.champ-load {width: 200px;}
 img.champ-fellow-square {display: inline-block; width: 32px; height: 32px;}
+img.sum-icon {float: left; width: 64px; height: 64px; margin: 0 10px 10px 0;}
 
 
 /* ---- TEXTS ---- */

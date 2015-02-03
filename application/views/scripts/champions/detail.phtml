@@ -15,8 +15,8 @@
     <img class="champ-load" src="<?php echo $this->baseUrl() . $this->championMapper->getChampionLoadImg($this->champion['id'], $n, $this->realm); ?>" alt="<?php echo $this->champion['name']; ?>" />
 </div>
 <br class="clear" />
-<?php if(true): ?>
-<div class="champ-last-games">
+<?php if (!empty($this->lastGames)): ?>
+<div class="champ-last-games grid_12">
     <h3>Últimos Jogos</h3>
     <br class="clear" />
     <?php foreach($this->lastGames['games'] as $game): ?>

@@ -22,7 +22,7 @@
             <?php foreach($this->champions as $champion): ?>
             <td>
                 <a href="<?php echo $this->url(array('id' => $champion['key'].'-'.$champion['id']), 'champion', true); ?>">
-                    <img class="champ-square" src="<?php echo $this->baseUrl() . $this->championMapper->getChampionSquareImg($champion['id'], $this->realm); ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name']; ?>" />
+                    <img class="champ-square" src="<?php echo $this->baseUrl() . $this->championMapper->getChampionSquareImg($champion['id'], $this->realm); ?>" alt="<?php echo $champion['name']; ?>" title="<?php echo $champion['name'] . ', ' . $champion['title'] ; ?>" />
                 </a>
             </td>
             <?php if(($i % 10) == 0) echo '</tr><tr>'; $i++; ?>

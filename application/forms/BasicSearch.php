@@ -2,11 +2,7 @@
 
 class Application_Form_BasicSearch extends Zend_Form {
 
-    private $elementDecorators = array('ViewHelper', 'Errors', 'Label');
-
-    public function init() {
-        /* Form Elements & Other Definitions Here ... */
-    }
+    private $elementDecorators = array('ViewHelper', 'Label');
 
     function __construct($options = NULL, $generateHash = true) {
         parent::__construct($options);
@@ -20,7 +16,7 @@ class Application_Form_BasicSearch extends Zend_Form {
     }
 
     public function customInit() {
-        $this->setMethod('post')->setEnctype('multipart/form-data')->setAttrib('class', 'form-top')->setAction('/summoners');
+        $this->setMethod('post')->setEnctype('multipart/form-data')->setAttrib('class', 'form-top')->setAction('/summoners/search');
         $this->setTranslator(Zend_Registry::get('translate'));
 
         $name = new Zend_Form_Element_Text('name');
@@ -40,7 +36,7 @@ class Application_Form_BasicSearch extends Zend_Form {
             'BR' => 'BR', 'NA' => 'NA', 'EUW' => 'EUW', 'EUNE' => 'EUNE', 'KR' => 'KR',
             'LAS' => 'LAS', 'LAN' => 'LAN', 'OCE' => 'OCE', 'TR' => 'TR', 'RU' => 'RU',
         );
-        $region = new Zend_Form_Element_Select($this->pre . 'role', array('multiOptions' => $regions));
+        $region = new Zend_Form_Element_Select('region', array('multiOptions' => $regions));
         $region->setLabel('Region:')
                 ->setAttrib('class', '')
                 ->setDecorators($this->elementDecorators)

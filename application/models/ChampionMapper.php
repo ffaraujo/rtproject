@@ -2,8 +2,10 @@
 
 class Application_Model_ChampionMapper {
 
+    // @TODO possibilidade de salvar em banco ao inves de cache
+    
     public function find($id) {
-        $cacheManager = new Cache(3600 * 24 * 2);
+        $cacheManager = new Cache(3600 * 24 * 8);
         $champion = $cacheManager->getJson("findChampion$id");
         if (!$champion) {
             $handle = fopen("https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion/$id?champData=all&api_key=" . API_KEY, 'rb');
@@ -22,7 +24,7 @@ class Application_Model_ChampionMapper {
     }
 
     public function fetchAll() {
-        $cacheManager = new Cache(3600 * 24 * 2);
+        $cacheManager = new Cache(3600 * 24 * 8);
         $champions = $cacheManager->getJson('fetchAllChampions');
         if (!$champions) {
             $handle = fopen('https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion?champData=image&api_key=' . API_KEY, 'rb');

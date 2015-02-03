@@ -44,6 +44,12 @@
           <actionMethod actionName="champion"/>
           <actionMethod actionName="detail"/>
         </controllerFile>
+        <controllerFile controllerName="Summoners">
+          <actionMethod actionName="index"/>
+          <actionMethod actionName="detail"/>
+          <actionMethod actionName="lastGames"/>
+          <actionMethod actionName="search"/>
+        </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Logon"/>
@@ -146,6 +152,18 @@
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="teste"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Summoners">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Summoners">
+            <viewScriptFile forActionName="detail"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Summoners">
+            <viewScriptFile forActionName="lastGames"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Summoners">
+            <viewScriptFile forActionName="search"/>
+          </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
         <viewFiltersDirectory enabled="false"/>
@@ -215,6 +233,12 @@
             <testApplicationActionMethod forActionName="index"/>
             <testApplicationActionMethod forActionName="champion"/>
             <testApplicationActionMethod forActionName="detail"/>
+          </testApplicationControllerFile>
+          <testApplicationControllerFile forControllerName="Summoners">
+            <testApplicationActionMethod forActionName="index"/>
+            <testApplicationActionMethod forActionName="detail"/>
+            <testApplicationActionMethod forActionName="lastGames"/>
+            <testApplicationActionMethod forActionName="search"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>

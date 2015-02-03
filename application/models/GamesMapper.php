@@ -3,7 +3,7 @@
 class Application_Model_GamesMapper {
 
     public function find($id) {
-        $cacheManager = new Cache(3600 * 24 * 2);
+        $cacheManager = new Cache(3600 * 24 * 1);
         $match = $cacheManager->getJson("findGame$id");
 
         if (!$match) {
