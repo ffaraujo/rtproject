@@ -4,9 +4,9 @@ $championMapper = new Application_Model_ChampionMapper();
 $spellMapper = new Application_Model_SpellMapper();
 ?>
 <div class="sum-title grid_12">
-    <img class="sum-icon" src="<?php echo $this->baseUrl() . $this->sumMapper->getProfileIcon(645, $realm) ; ?>" alt="VanBelt" />
-    <h2>VanBelt</h2>
-    <h4><em>Nv: 30</em> <span>UNRANKED</span></h4>
+    <img class="sum-icon" src="<?php echo $this->baseUrl() . $this->sumMapper->getProfileIcon($this->summoner['profileIconId'], $realm) ; ?>" alt="<?php echo $this->summoner['name']; ?>" />
+    <h2><?php echo $this->summoner['name']; ?></h2>
+    <h4><em>Nv: <?php echo $this->summoner['summonerLevel']; ?></em> <span>UNRANKED</span></h4>
 </div>
 <br class="clear" />
 <div id="view-content" class="prefix_3 grid_6" style="height: 280px;">
@@ -19,30 +19,32 @@ $spellMapper = new Application_Model_SpellMapper();
 <div class="sum-last-games grid_12">
     <h3>Últimos Jogos</h3>
     <br class="clear" />
+    <?php foreach($this->games['games'] as $game): ?>
     <table class="sum-game">
         <tr>
             <td>
                 <img class="champ-square-info" 
-                     src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg(11, $realm); ?>" 
-                     alt="<?php echo 'Master Yi'; ?>" />
-                <img class="champ-game-spell" src="<?php echo $spellMapper->getImage(14, $realm); ?>" alt="spell #1" />
-                <img class="champ-game-spell" src="<?php echo $spellMapper->getImage(4,  $realm); ?>" alt="spell #2" />
+                     src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($game['championId'], $realm); ?>" 
+                     alt="" />
+                <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell1'], $realm); ?>" alt="spell #1" />
+                <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell2'], $realm); ?>" alt="spell #2" />
             </td>
             <td>
-                <span class="champ-info-stats"><em><?php echo $this->DisplayGameSubType("BOT"); ?></em> - <strong>K/D/A:</strong> <?php echo /*isset($game['stats']['championsKilled'])*/false ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo /*isset($game['stats']['numDeaths'])*/false ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo /*isset($game['stats']['assists'])*/false ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS(/*$game['stats']['minionsKilled']*/245, /*$game['stats']['neutralMinionsKilled']*/37); ?></span>
+                <span class="champ-info-stats"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
             </td>
             <td>
-                <?php /*foreach($game['fellowPlayers'] as $fellow): ?>
+                <?php foreach($game['fellowPlayers'] as $fellow): ?>
                 <?php if($fellow['teamId'] == $game['teamId']): ?>
                 <img class="champ-fellow-square" src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($fellow['championId'], $realm); ?>" alt="champ" />
                 <?php endif; ?>
-                <?php endforeach;*/ ?>
+                <?php endforeach; ?>
             </td>
             <td>
-                <?php $dt = Zend_Date::now(); $dt->setTimestamp(/*($game['createDate']/1000)*/1420476640); ?>
-                <span class="champ-info-time"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration(/*$game['stats']['timePlayed']*/2850); ?></span>
+                <?php $dt = Zend_Date::now(); $dt->setTimestamp(($game['createDate']/1000)); ?>
+                <span class="champ-info-time"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
             </td>
         </tr>
     </table>
     <br class="clear" />
+    <?php endforeach; ?>
 </div>

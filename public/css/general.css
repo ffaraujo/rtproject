@@ -64,6 +64,7 @@ ul.pagination li a {display: block; min-width: 30px; padding: 4px; color: black;
 
 /* ---- TITLES ---- */
 .title {}
+.sum-title h2, .champ-title h2 {margin: 0; padding: 0;}
 
 /* ---- TABLES ---- */
 table {}

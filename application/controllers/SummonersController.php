@@ -21,6 +21,10 @@ class SummonersController extends GeneralController {
         if (!$this->view->summoner) {
             $this->addFlashMessage(array('Invocador ' . $this->_getParam('id') . ' não encontrado.', ERROR), '/');
         }
+        $gamesMapper = new Application_Model_GamesMapper();
+        $this->view->games = $gamesMapper->fetchRecent($this->view->summoner['id']);
+        if (!$this->view->games)
+            $this->view->games = array();
     }
 
     public function lastGamesAction() {
