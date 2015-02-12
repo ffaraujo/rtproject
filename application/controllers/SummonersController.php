@@ -22,9 +22,10 @@ class SummonersController extends GeneralController {
             $this->addFlashMessage(array('Invocador ' . $this->_getParam('id') . ' não encontrado.', ERROR), '/');
         }
         $gamesMapper = new Application_Model_GamesMapper();
-        $this->view->games = $gamesMapper->fetchRecent($this->view->summoner['id']);
+        $this->view->games = $gamesMapper->fetchRecent($this->view->summoner['id'], $this->_getParam('region'));
         if (!$this->view->games)
             $this->view->games = array();
+        $this->view->league = $mapper->fetchLeague($this->view->summoner['id'], $this->_getParam('region'));
     }
 
     public function lastGamesAction() {

@@ -2,14 +2,18 @@
 
 class Application_Model_SummonerMapper {
 
+    private $_regionalEndpoints;
+
+    function __construct() {
+        $this->_regionalEndpoints = RiotConstants::$regionalEndpoints;
+    }
+
     public function find($id, $region = 'BR') {
         $cacheManager = new Cache(3600 * 24 * 1);
         $summoner = $cacheManager->getJson("findSummoner$id");
 
         if (!$summoner) {
-            $regionalEndpoints = RiotConstants::$regionalEndpoints;
-
-            $handle = fopen("https://{$regionalEndpoints[$region]}/api/lol/br/v1.4/summoner/$id?api_key=" . API_KEY, 'rb');
+            $handle = fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v1.4/summoner/$id?api_key=" . API_KEY, 'rb');
             if ($handle) {
                 $data = stream_get_contents($handle);
                 $summoner = json_decode($data, true);
@@ -28,18 +32,16 @@ class Application_Model_SummonerMapper {
 
     public function findByName($name, $region = 'BR') {
         $cacheManager = new Cache(3600 * 24 * 1);
-        $summoner = $cacheManager->getJson("findSummoner$name");
+        $summoner = $cacheManager->getJson("findSummoner" . $this->standardizeSumName($name));
 
         if (!$summoner) {
-            $regionalEndpoints = RiotConstants::$regionalEndpoints;
-
-            $handle = fopen("https://{$regionalEndpoints[$region]}/api/lol/br/v1.4/summoner/by-name/" . rawurlencode($name) . "?api_key=" . API_KEY, 'rb');
+            $handle = fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v1.4/summoner/by-name/" . rawurlencode($name) . "?api_key=" . API_KEY, 'rb');
             if ($handle) {
                 $data = stream_get_contents($handle);
                 $summoner = json_decode($data, true);
                 fclose($handle);
                 $summoner = array_shift($summoner);
-                $cacheManager->saveJson("findSummoner$name", $summoner);
+                $cacheManager->saveJson("findSummoner" . $this->standardizeSumName($name), $summoner);
                 //exit(var_dump($summoner));
                 return $summoner;
             } else {
@@ -47,6 +49,36 @@ class Application_Model_SummonerMapper {
             }
         } else {
             return $summoner;
+        }
+    }
+
+    public function fetchLeague($id, $region = 'BR') {
+        // @TODO maneira de melhorar essa duplicacao
+        $cacheManager = new Cache(120);
+        $league = $cacheManager->getJson("fetchLeague$id");
+
+        if (!$league) {
+            $handle = @fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v2.5/league/by-summoner/$id?api_key=" . API_KEY, 'rb');
+            if ($handle) {
+                $data = stream_get_contents($handle);
+                $league = json_decode($data, true);
+                fclose($handle);
+                $league = array_shift($league);
+                $league = array_shift($league);
+
+                foreach ($league['entries'] as $entry) {
+                    if ($entry['playerOrTeamId'] == $league['participantId']) {
+                        $league['sumData'] = $entry;
+                        break;
+                    }
+                }
+                $cacheManager->saveJson("fetchLeague$id", $league);
+                return $league;
+            } else {
+                return false;
+            }
+        } else {
+            return $league;
         }
     }
 

@@ -6,26 +6,34 @@ $spellMapper = new Application_Model_SpellMapper();
 <div class="sum-title grid_12">
     <img class="sum-icon" src="<?php echo $this->baseUrl() . $this->sumMapper->getProfileIcon($this->summoner['profileIconId'], $realm) ; ?>" alt="<?php echo $this->summoner['name']; ?>" />
     <h2><?php echo $this->summoner['name']; ?></h2>
-    <h4><em>Nv: <?php echo $this->summoner['summonerLevel']; ?></em> <span>UNRANKED</span></h4>
+    <h4><em>Nv: <?php echo $this->summoner['summonerLevel']; ?></em> <span><?php $rank = ($this->league) ? $this->league['tier'] . ' ' . $this->league['sumData']['division'] : 'UNRANKED'; echo $rank; ?></span></h4>
 </div>
 <br class="clear" />
-<div id="view-content" class="prefix_3 grid_6" style="height: 280px;">
-    &nbsp;
+<div id="view-content" class="prefix_3 grid_3 suffix_3" style="height: 280px;">
+    <div style="background-color: #FFD; height: 100%;">
+    <?php if($this->league): ?>
+        <?php echo $rank; ?><br />
+        <?php echo $this->league['sumData']['leaguePoints'] . ' points'; ?><br />
+        <?php echo $this->league['sumData']['wins'] . ' wins'; ?><br />
+        <?php echo $this->league['sumData']['losses'] . ' losses'; ?><br />
+    <?php else: ?>
+        &nbsp;
+    <?php endif; ?>
+    </div>
 </div>
-<div class="grid_3" style="height: 280px;">
+<div class="grid_3" style="height: 280px; background-color: #FFD;">
     &nbsp;
 </div>
 <br class="clear" />
 <div class="sum-last-games grid_12">
     <h3>Últimos Jogos</h3>
     <br class="clear" />
-    <?php foreach($this->games['games'] as $game): ?>
     <table class="sum-game">
+        <?php foreach($this->games['games'] as $game): ?>
         <tr>
             <td>
                 <img class="champ-square-info" 
-                     src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($game['championId'], $realm); ?>" 
-                     alt="" />
+                     src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($game['championId'], $realm); ?>" alt="" />
                 <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell1'], $realm); ?>" alt="spell #1" />
                 <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell2'], $realm); ?>" alt="spell #2" />
             </td>
@@ -44,7 +52,7 @@ $spellMapper = new Application_Model_SpellMapper();
                 <span class="champ-info-time"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
             </td>
         </tr>
+        <?php endforeach; ?>
     </table>
     <br class="clear" />
-    <?php endforeach; ?>
 </div>
