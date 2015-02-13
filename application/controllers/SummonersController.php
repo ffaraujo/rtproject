@@ -21,6 +21,12 @@ class SummonersController extends GeneralController {
         if (!$this->view->summoner) {
             $this->addFlashMessage(array('Invocador ' . $this->_getParam('id') . ' não encontrado.', ERROR), '/');
         }
+        
+        $sumSession = new Zend_Session_Namespace('summoner');
+        $sumSession->setExpirationSeconds(60 * 15);
+        $sumSession->id = $this->view->summoner['id'];
+        $sumSession->region = $this->_getParam('region');
+        
         $gamesMapper = new Application_Model_GamesMapper();
         $this->view->games = $gamesMapper->fetchRecent($this->view->summoner['id'], $this->_getParam('region'));
         if (!$this->view->games)
@@ -43,6 +49,10 @@ class SummonersController extends GeneralController {
                 $data['name'] = str_replace(',', '', $data['name']);
                 $summoner = $mapper->findByName($data['name'], $data['region']);
                 if ($summoner) {
+                    $sumSession = new Zend_Session_Namespace('summoner');
+                    $sumSession->setExpirationSeconds(60 * 15);
+                    $sumSession->id = $summoner['id'];
+                    $sumSession->region = $data['region'];
                     $this->_redirect('/summoner/' . $data['region'] . '/' . $mapper->standardizeSumName($summoner['name']) . '-' . $summoner['id']);
                 } else {
                     $this->addFlashMessage(array('Invocador ' . $data['name'] . ' não encontrado.', ERROR), '/');

@@ -37,17 +37,18 @@ class ChampionsController extends GeneralController {
         $mapper = $this->view->championMapper = new Application_Model_ChampionMapper();
         $this->view->champion = $mapper->find($id);
 
-        $gamesMapper = new Application_Model_GamesMapper();
-        //400463, 3799295
-        if ($this->_hasParam('sum'))
-            $games = $gamesMapper->fetchRecent($this->_getParam('sum'));
-        else
-            $games = $gamesMapper->fetchRecent('400463');
+        $sumSession = new Zend_Session_Namespace('summoner');
+        if (isset($sumSession->id) && isset($sumSession->region)) {
+            $gamesMapper = new Application_Model_GamesMapper();
+            $games = $gamesMapper->fetchRecent($sumSession->id, $sumSession->region);
 
-        if ($games)
-            $this->view->lastGames = $games;
-        else
+            if ($games)
+                $this->view->lastGames = $games;
+            else
+                $this->view->lastGames = array();
+        } else {
             $this->view->lastGames = array();
+        }
 
         $this->view->spellMapper = new Application_Model_SpellMapper();
     }

@@ -4,7 +4,7 @@ class Application_Form_BasicSearch extends Zend_Form {
 
     private $elementDecorators = array('ViewHelper', 'Label');
 
-    function __construct($options = NULL, $generateHash = true) {
+    function __construct($options = NULL, $generateHash = false) {
         parent::__construct($options);
         if ($generateHash) {
             $hash = new Zend_Form_Element_Hash('csrf');
