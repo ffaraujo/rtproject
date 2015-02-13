@@ -10,7 +10,7 @@ class Application_Model_GamesMapper {
     
     public function find($id, $region = 'BR') {
         $cacheManager = new Cache(3600 * 24 * 1);
-        $match = $cacheManager->getJson("findGame$id");
+        $match = $cacheManager->getJson("findGame$region$id");
 
         if (!$match) {
             $handle = fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v2.2/match/$id?api_key=" . API_KEY, 'rb');
@@ -18,7 +18,7 @@ class Application_Model_GamesMapper {
                 $data = stream_get_contents($handle);
                 $match = json_decode($data, true);
                 fclose($handle);
-                $cacheManager->saveJson("findGame$id", $match);
+                $cacheManager->saveJson("findGame$region$id", $match);
                 return $match;
             } else {
                 return false;
@@ -45,7 +45,7 @@ class Application_Model_GamesMapper {
 
     public function fetchRecent($sumID, $region = 'BR') {
         $cacheManager = new Cache(120);
-        $games = $cacheManager->getJson("fetchRecent$sumID");
+        $games = $cacheManager->getJson("fetchRecent$region$sumID");
 
         if (!$games) {
             $handle = fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v1.3/game/by-summoner/$sumID/recent?api_key=" . API_KEY, 'rb');
@@ -53,7 +53,7 @@ class Application_Model_GamesMapper {
                 $data = stream_get_contents($handle);
                 $games = json_decode($data, true);
                 fclose($handle);
-                $cacheManager->saveJson("fetchRecent$sumID", $games);
+                $cacheManager->saveJson("fetchRecent$region$sumID", $games);
                 return $games;
             } else {
                 return false;

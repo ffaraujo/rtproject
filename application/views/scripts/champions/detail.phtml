@@ -19,10 +19,10 @@
 <div class="champ-last-games grid_12">
     <h3>Últimos Jogos</h3>
     <br class="clear" />
-    <?php foreach($this->lastGames['games'] as $game): ?>
-    <?php if($game['championId'] == $this->champion['id']): ?>
     <table class="champ-game">
-        <tr>
+        <?php foreach($this->lastGames['games'] as $game): ?>
+        <?php if($game['championId'] == $this->champion['id']): ?>
+        <tr<?php $result = ($game['stats']['win']) ? 'win' : 'loss'; echo ' class="' . $result . '"'; ?>>
             <td>
                 <img class="champ-square-info" 
                      src="<?php echo $this->baseUrl() . $this->championMapper->getChampionSquareImg($this->champion['id'], $this->realm); ?>" 
@@ -45,9 +45,9 @@
                 <span class="champ-info-time"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
             </td>
         </tr>
+        <?php endif; ?>
+        <?php endforeach; ?>
     </table>
     <br class="clear" />
-    <?php endif; ?>
-    <?php endforeach; ?>
 </div>
 <?php endif; ?>

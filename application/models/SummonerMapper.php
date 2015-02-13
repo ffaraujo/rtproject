@@ -10,7 +10,7 @@ class Application_Model_SummonerMapper {
 
     public function find($id, $region = 'BR') {
         $cacheManager = new Cache(3600 * 24 * 1);
-        $summoner = $cacheManager->getJson("findSummoner$id");
+        $summoner = $cacheManager->getJson("findSummoner$region$id");
 
         if (!$summoner) {
             $handle = fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v1.4/summoner/$id?api_key=" . API_KEY, 'rb');
@@ -19,8 +19,7 @@ class Application_Model_SummonerMapper {
                 $summoner = json_decode($data, true);
                 fclose($handle);
                 $summoner = array_shift($summoner);
-                $cacheManager->saveJson("findSummoner$id", $summoner);
-                //exit(var_dump($summoner));
+                $cacheManager->saveJson("findSummoner$region$id", $summoner);
                 return $summoner;
             } else {
                 return false;
@@ -32,7 +31,7 @@ class Application_Model_SummonerMapper {
 
     public function findByName($name, $region = 'BR') {
         $cacheManager = new Cache(3600 * 24 * 1);
-        $summoner = $cacheManager->getJson("findSummoner" . $this->standardizeSumName($name));
+        $summoner = $cacheManager->getJson("findSummoner$region" . $this->standardizeSumName($name));
 
         if (!$summoner) {
             $handle = fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v1.4/summoner/by-name/" . rawurlencode($name) . "?api_key=" . API_KEY, 'rb');
@@ -41,8 +40,7 @@ class Application_Model_SummonerMapper {
                 $summoner = json_decode($data, true);
                 fclose($handle);
                 $summoner = array_shift($summoner);
-                $cacheManager->saveJson("findSummoner" . $this->standardizeSumName($name), $summoner);
-                //exit(var_dump($summoner));
+                $cacheManager->saveJson("findSummoner$region" . $this->standardizeSumName($name), $summoner);
                 return $summoner;
             } else {
                 return false;
@@ -55,7 +53,7 @@ class Application_Model_SummonerMapper {
     public function fetchLeague($id, $region = 'BR') {
         // @TODO maneira de melhorar essa duplicacao
         $cacheManager = new Cache(120);
-        $league = $cacheManager->getJson("fetchLeague$id");
+        $league = $cacheManager->getJson("fetchLeague$region$id");
 
         if (!$league) {
             $handle = @fopen("https://{$this->_regionalEndpoints[$region]}/api/lol/" . strtolower($region) . "/v2.5/league/by-summoner/$id?api_key=" . API_KEY, 'rb');
@@ -72,7 +70,7 @@ class Application_Model_SummonerMapper {
                         break;
                     }
                 }
-                $cacheManager->saveJson("fetchLeague$id", $league);
+                $cacheManager->saveJson("fetchLeague$region$id", $league);
                 return $league;
             } else {
                 return false;

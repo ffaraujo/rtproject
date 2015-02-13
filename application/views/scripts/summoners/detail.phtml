@@ -2,6 +2,7 @@
 $realm = new Application_Model_Realm();
 $championMapper = new Application_Model_ChampionMapper();
 $spellMapper = new Application_Model_SpellMapper();
+// @TODO items por partida
 ?>
 <div class="sum-title grid_12">
     <img class="sum-icon" src="<?php echo $this->baseUrl() . $this->sumMapper->getProfileIcon($this->summoner['profileIconId'], $realm) ; ?>" alt="<?php echo $this->summoner['name']; ?>" />
@@ -30,7 +31,7 @@ $spellMapper = new Application_Model_SpellMapper();
     <br class="clear" />
     <table class="sum-game">
         <?php foreach($this->games['games'] as $game): ?>
-        <tr>
+        <tr<?php $result = ($game['stats']['win']) ? 'win' : 'loss'; echo ' class="' . $result . '"'; ?>>
             <td>
                 <img class="champ-square-info" 
                      src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($game['championId'], $realm); ?>" alt="" />

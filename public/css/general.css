@@ -89,6 +89,9 @@ table.back-table tbody td {
 table.champ-game {}
 table.champ-game td {vertical-align: bottom;}
 
+table.sum-game tr.win td, table.champ-game tr.win td {background-color: #EAFFFF}
+table.sum-game tr.loss td, table.champ-game tr.loss td {background-color: #FFDDFF}
+
 /* ---- MENUS ---- */
 ul.menu {
     list-style: none;
