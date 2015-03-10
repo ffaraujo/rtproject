@@ -2,6 +2,7 @@
 $realm = new Application_Model_Realm();
 $championMapper = new Application_Model_ChampionMapper();
 $spellMapper = new Application_Model_SpellMapper();
+$itemMapper = new Application_Model_ItemMapper();
 // @TODO items por partida
 ?>
 <div class="sum-title grid_12">
@@ -29,6 +30,9 @@ $spellMapper = new Application_Model_SpellMapper();
 <div class="sum-last-games grid_12">
     <h3>Últimos Jogos</h3>
     <br class="clear" />
+    <style type="text/css">
+        .sum-item-img {width: 20px; height: 20px;}
+    </style>
     <table class="sum-game">
         <?php foreach($this->games['games'] as $game): ?>
         <tr<?php $result = ($game['stats']['win']) ? 'win' : 'loss'; echo ' class="' . $result . '"'; ?>>
@@ -47,6 +51,12 @@ $spellMapper = new Application_Model_SpellMapper();
                 <img class="champ-fellow-square" src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($fellow['championId'], $realm); ?>" alt="champ" />
                 <?php endif; ?>
                 <?php endforeach; ?>
+            </td>
+            <td>
+                <?php for($i=0,$j=0; $i <= 6; $i++): ?>
+                <?php if(isset($game["stats"]["item$i"])): ?><img class="sum-item-img" src="<?php echo $this->baseUrl() . $itemMapper->getImage($game["stats"]["item$i"], $realm); $j++; ?>" alt="item <?php echo $i; ?>" /><?php endif; ?>
+                <?php if($j == 3) echo '<br />'; ?>
+                <?php endfor; ?>
             </td>
             <td>
                 <?php $dt = Zend_Date::now(); $dt->setTimestamp(($game['createDate']/1000)); ?>

@@ -3,7 +3,7 @@
 class Application_Model_ChampionMapper {
 
     // @TODO possibilidade de salvar em banco ao inves de cache
-    
+
     public function find($id) {
         $cacheManager = new Cache(3600 * 24 * 8);
         $champion = $cacheManager->getJson("findChampion$id");
@@ -27,7 +27,7 @@ class Application_Model_ChampionMapper {
         $cacheManager = new Cache(3600 * 24 * 8);
         $champions = $cacheManager->getJson('fetchAllChampions');
         if (!$champions) {
-            $handle = fopen('https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion?champData=image&api_key=' . API_KEY, 'rb');
+            $handle = fopen('https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion?champData=all&api_key=' . API_KEY, 'rb');
             if ($handle) {
                 $data = stream_get_contents($handle);
                 $champions = json_decode($data, true);
@@ -63,6 +63,11 @@ class Application_Model_ChampionMapper {
             if (!$this->saveImage($champ, $n, $realm)) {
                 return '';
             }
+        } else {
+            unlink(PATH_UPLOAD . "skins/" . $champ['key'] . "_$n.jpg");
+            if (!$this->saveImage($champ, $n, $realm)) {
+                return '';
+            }
         }
         return "/upload/skins/" . $champ['key'] . "_$n.jpg";
     }
@@ -90,7 +95,7 @@ class Application_Model_ChampionMapper {
         set_time_limit(120);
         $path = PATH_UPLOAD . "skins/";
         if (!file_exists($path)) {
-            mkdir($path, 0755, true);
+            mkdir($path . "splash_art", 0755, true);
         }
 
         if (!$n)
@@ -106,6 +111,18 @@ class Application_Model_ChampionMapper {
                 fwrite($handle2, $data);
             }
             fclose($handle2);
+
+            $handle = @fopen($realm->getCdn() . "/img/champion/splash/$file", 'rb');
+            if ($handle) {
+                $data = stream_get_contents($handle);
+                fclose($handle);
+                $handle2 = @fopen($path . "splash_art/" . $file, 'wb');
+                if ($handle2) {
+                    fwrite($handle2, $data);
+                }
+                fclose($handle2);
+            }
+
             return true;
         } else {
             return false;

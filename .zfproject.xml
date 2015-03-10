@@ -81,6 +81,8 @@
         <modelFile modelName="Realm"/>
         <modelFile modelName="GamesMapper"/>
         <modelFile modelName="SpellMapper"/>
+        <modelFile modelName="Item"/>
+        <modelFile modelName="ItemMapper"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
