@@ -32,6 +32,14 @@ class SummonersController extends GeneralController {
         if (!$this->view->games)
             $this->view->games = array();
         $this->view->league = $mapper->fetchLeague($this->view->summoner['id'], $this->_getParam('region'));
+        
+        var_dump($this->view->games['games'][0]);
+        echo "=============<br/>";
+        $g = $gamesMapper->find(486598065, 'BR');
+        var_dump($g);
+        echo "=============<br/>";
+        var_dump($g['participants'][0]);
+        exit();
     }
 
     public function lastGamesAction() {

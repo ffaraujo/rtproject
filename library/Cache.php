@@ -14,6 +14,11 @@
 class Cache {
 
     private $cacheObj;
+    public static $tinyCache = 900; //3600 * 0,25
+    public static $smallCache = 86400; //3600 * 24
+    public static $mediumCache = 604800; //3600 * 24 * 7
+    public static $largeCache = 2592000; //3600 * 24 * 30
+    public static $hugeCache = 5184000; //3600 * 24 * 60
 
     function __construct($lifetime = false) {
         $cacheDir = APPLICATION_PATH . '/../cache/';
@@ -24,7 +29,7 @@ class Cache {
             $lifetime = 3600;
 
         $frontendOptions = array(
-            'lifetime' => $lifetime, // cache lifetime of 2 hours
+            'lifetime' => $lifetime, // cache lifetime of 1 hour default
             'automatic_serialization' => true
         );
 

@@ -3,7 +3,6 @@ $realm = new Application_Model_Realm();
 $championMapper = new Application_Model_ChampionMapper();
 $spellMapper = new Application_Model_SpellMapper();
 $itemMapper = new Application_Model_ItemMapper();
-// @TODO items por partida
 ?>
 <div class="sum-title grid_12">
     <img class="sum-icon" src="<?php echo $this->baseUrl() . $this->sumMapper->getProfileIcon($this->summoner['profileIconId'], $realm) ; ?>" alt="<?php echo $this->summoner['name']; ?>" />
@@ -45,6 +44,7 @@ $itemMapper = new Application_Model_ItemMapper();
             <td>
                 <span class="champ-info-stats"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
             </td>
+            <?php if(isset($game['fellowPlayers'])): ?>
             <td>
                 <?php foreach($game['fellowPlayers'] as $fellow): ?>
                 <?php if($fellow['teamId'] == $game['teamId']): ?>
@@ -52,6 +52,9 @@ $itemMapper = new Application_Model_ItemMapper();
                 <?php endif; ?>
                 <?php endforeach; ?>
             </td>
+            <?php else: ?>
+            <td>&nbsp;</td>
+            <?php endif; ?>
             <td>
                 <?php for($i=0,$j=0; $i <= 6; $i++): ?>
                 <?php if(isset($game["stats"]["item$i"])): ?><img class="sum-item-img" src="<?php echo $this->baseUrl() . $itemMapper->getImage($game["stats"]["item$i"], $realm); $j++; ?>" alt="item <?php echo $i; ?>" /><?php endif; ?>

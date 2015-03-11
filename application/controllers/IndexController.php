@@ -6,7 +6,8 @@ class IndexController extends GeneralController {
 	 * K:2, D:-0.5, A:1.5, CS:0.01, 10+ K/A:2, 3K/4K/5K: 2/5/10
 	 * KDA: (K+A) / D
      * Summoner ID: 3799295, 4365847, 13160847, 400463, 13294089
-     * Games IDs: 446081949, 455132204
+     * Games IDs: 486598065, 446081949, 455132204
+     * @TODO total de kills por time
      */
 
     public function init() {

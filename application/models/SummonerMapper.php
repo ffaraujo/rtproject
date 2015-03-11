@@ -9,7 +9,7 @@ class Application_Model_SummonerMapper {
     }
 
     public function find($id, $region = 'BR') {
-        $cacheManager = new Cache(3600 * 24 * 1);
+        $cacheManager = new Cache(Cache::$smallCache);
         $summoner = $cacheManager->getJson("findSummoner$region$id");
 
         if (!$summoner) {
@@ -30,7 +30,7 @@ class Application_Model_SummonerMapper {
     }
 
     public function findByName($name, $region = 'BR') {
-        $cacheManager = new Cache(3600 * 24 * 1);
+        $cacheManager = new Cache(Cache::$smallCache);
         $summoner = $cacheManager->getJson("findSummoner$region" . $this->standardizeSumName($name));
 
         if (!$summoner) {
@@ -51,8 +51,8 @@ class Application_Model_SummonerMapper {
     }
 
     public function fetchLeague($id, $region = 'BR') {
-        // @TODO maneira de melhorar essa duplicacao
-        $cacheManager = new Cache(120);
+        // @TODO alterar para 2min (120)
+        $cacheManager = new Cache(Cache::$smallCache);
         $league = $cacheManager->getJson("fetchLeague$region$id");
 
         if (!$league) {

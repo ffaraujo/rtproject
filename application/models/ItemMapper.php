@@ -3,7 +3,7 @@
 class Application_Model_ItemMapper {
 
     public function find($id) {
-        $cacheManager = new Cache(3600 * 24 * 8);
+        $cacheManager = new Cache(Cache::$hugeCache);
         $item = $cacheManager->getJson("findItem$id");
         if (!$item) {
             $handle = fopen("https://global.api.pvp.net/api/lol/static-data/br/v1.2/item/$id?itemData=all&api_key=" . API_KEY, 'rb');
@@ -22,7 +22,7 @@ class Application_Model_ItemMapper {
     }
 
     public function fetchAll() {
-        $cacheManager = new Cache(3600 * 24 * 8);
+        $cacheManager = new Cache(Cache::$hugeCache);
         $items = $cacheManager->getJson("fetchAllItems");
         if (!$items) {
             $handle = fopen("https://global.api.pvp.net/api/lol/static-data/br/v1.2/item?itemListData=all&api_key=" . API_KEY, 'rb');
@@ -65,7 +65,6 @@ class Application_Model_ItemMapper {
         }
 
         $file = $item['image']['full'];
-        //http://ddragon.leagueoflegends.com/cdn/5.2.1/img/item/1001.png
         $handle = @fopen($realm->getCdn() . '/' . $realm->getVersion() . "/img/item/$file", 'rb');
         if ($handle) {
             $data = stream_get_contents($handle);

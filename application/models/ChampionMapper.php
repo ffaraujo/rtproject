@@ -5,7 +5,7 @@ class Application_Model_ChampionMapper {
     // @TODO possibilidade de salvar em banco ao inves de cache
 
     public function find($id) {
-        $cacheManager = new Cache(3600 * 24 * 8);
+        $cacheManager = new Cache(Cache::$hugeCache);
         $champion = $cacheManager->getJson("findChampion$id");
         if (!$champion) {
             $handle = fopen("https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion/$id?champData=all&api_key=" . API_KEY, 'rb');
@@ -24,7 +24,7 @@ class Application_Model_ChampionMapper {
     }
 
     public function fetchAll() {
-        $cacheManager = new Cache(3600 * 24 * 8);
+        $cacheManager = new Cache(Cache::$hugeCache);
         $champions = $cacheManager->getJson('fetchAllChampions');
         if (!$champions) {
             $handle = fopen('https://br.api.pvp.net/api/lol/static-data/br/v1.2/champion?champData=all&api_key=' . API_KEY, 'rb');
@@ -72,6 +72,7 @@ class Application_Model_ChampionMapper {
         return "/upload/skins/" . $champ['key'] . "_$n.jpg";
     }
 
+    // @TODO verify function
     public function fetchItemsByChampion($id) {
         $champ = $this->find($id);
         $items = array();

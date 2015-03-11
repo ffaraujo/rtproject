@@ -9,7 +9,7 @@ class Application_Model_GamesMapper {
     }
     
     public function find($id, $region = 'BR') {
-        $cacheManager = new Cache(3600 * 24 * 1);
+        $cacheManager = new Cache(Cache::$hugeCache);
         $match = $cacheManager->getJson("findGame$region$id");
 
         if (!$match) {
@@ -28,6 +28,7 @@ class Application_Model_GamesMapper {
         }
     }
 
+    // @TODO verify function
     public function fetchByChampion($sumID, $champID, $region = 'BR') {
         $bIndex = 0;
         $eIndex = 15;
@@ -44,7 +45,8 @@ class Application_Model_GamesMapper {
     }
 
     public function fetchRecent($sumID, $region = 'BR') {
-        $cacheManager = new Cache(120);
+        // @TODO alterar para 2min (120)
+        $cacheManager = new Cache(Cache::$smallCache);
         $games = $cacheManager->getJson("fetchRecent$region$sumID");
 
         if (!$games) {
