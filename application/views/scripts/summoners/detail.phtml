@@ -36,8 +36,9 @@ $itemMapper = new Application_Model_ItemMapper();
         <?php foreach($this->games['games'] as $game): ?>
         <tr<?php $result = ($game['stats']['win']) ? 'win' : 'loss'; echo ' class="' . $result . '"'; ?>>
             <td>
-                <img class="champ-square-info" 
-                     src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($game['championId'], $realm); ?>" alt="" />
+                <a href="<?php echo $this->url(array('id' => $game['championId']), 'champion', true); ?>">
+                    <img class="champ-square-info" src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($game['championId'], $realm); ?>" alt="" />
+                </a>
                 <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell1'], $realm); ?>" alt="spell #1" />
                 <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell2'], $realm); ?>" alt="spell #2" />
             </td>
@@ -56,11 +57,36 @@ $itemMapper = new Application_Model_ItemMapper();
             <td>&nbsp;</td>
             <?php endif; ?>
             <td>
-                <?php for($i=0,$j=0; $i <= 6; $i++): ?>
-                <?php if(isset($game["stats"]["item$i"])): ?><img class="sum-item-img" src="<?php echo $this->baseUrl() . $itemMapper->getImage($game["stats"]["item$i"], $realm); $j++; ?>" alt="item <?php echo $i; ?>" /><?php endif; ?>
-                <?php if($j == 3) echo '<br />'; ?>
-                <?php endfor; ?>
+                <table style="display: inline-block;">
+                    <tr>
+                        <?php for($i=0;$i<=5;$i++): ?>
+                        <td>
+                        <?php if(isset($game["stats"]["item$i"])): ?>
+                            <img class="sum-item-img" src="<?php echo $this->baseUrl() . $itemMapper->getImage($game["stats"]["item$i"], $realm); ?>" alt="item <?php echo $i; ?>" />
+                        <?php else: ?>
+                            &nbsp;
+                        <?php endif; ?>
+                        </td>
+                        <?php if($i == 2) echo "</tr><tr>"; ?>
+                        <?php endfor; ?>
+                    </tr>
+                </table>
+                <table style="display: inline-block;">
+                    <tr>
+                        <td>
+                            <?php if(isset($game["stats"]["item6"])): ?>
+                            <img class="sum-item-img" src="<?php echo $this->baseUrl() . $itemMapper->getImage($game["stats"]["item$i"], $realm); ?>" alt="item <?php echo $i; ?>" />
+                            <?php else: ?>
+                            &nbsp;
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
             </td>
+            <td>Gold: <?php echo $game['stats']['goldEarned']; ?></td>
             <td>
                 <?php $dt = Zend_Date::now(); $dt->setTimestamp(($game['createDate']/1000)); ?>
                 <span class="champ-info-time"><strong>Data:</strong> <?php echo $dt->get('dd/MM/yyyy'); ?> - <strong>Duração:</strong> <?php echo $this->DisplayDuration($game['stats']['timePlayed']); ?></span>
