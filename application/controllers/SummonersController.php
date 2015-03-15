@@ -12,6 +12,9 @@ class SummonersController extends GeneralController {
     }
 
     public function detailAction() {
+        /*
+         * @TODO adicionar link para os companheiros
+         */
         if (!$this->_hasParam('id') || !$this->_hasParam('region')) {
             $this->addFlashMessage(array('Não foi informado um invocador', ERROR), '/');
         }
@@ -32,6 +35,8 @@ class SummonersController extends GeneralController {
         if (!$this->view->games)
             $this->view->games = array();
         $this->view->league = $mapper->fetchLeague($this->view->summoner['id'], $this->_getParam('region'));
+        
+        $this->view->region = $this->_getParam('region');
     }
 
     public function lastGamesAction() {

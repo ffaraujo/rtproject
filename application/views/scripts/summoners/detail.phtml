@@ -43,13 +43,13 @@ $itemMapper = new Application_Model_ItemMapper();
                 <img class="champ-game-spell" src="<?php echo $spellMapper->getImage($game['spell2'], $realm); ?>" alt="spell #2" />
             </td>
             <td>
-                <span class="champ-info-stats"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?></span>
+                <span class="champ-info-stats"><em><?php echo $this->DisplayGameSubType($game['subType']); ?></em> - <strong>K/D/A:</strong> <?php echo isset($game['stats']['championsKilled']) ? $game['stats']['championsKilled'] : 0 ; ?>/<?php echo isset($game['stats']['numDeaths']) ? $game['stats']['numDeaths'] : 0 ; ?>/<?php echo isset($game['stats']['assists']) ? $game['stats']['assists'] : 0 ; ?> - <strong>CS:</strong> <?php @print $this->DisplayCS($game['stats']['minionsKilled'], $game['stats']['neutralMinionsKilled']); ?> - <strong>Nv:</strong> <?php echo $game['stats']['level']; ?></span>
             </td>
             <?php if(isset($game['fellowPlayers'])): ?>
             <td>
                 <?php foreach($game['fellowPlayers'] as $fellow): ?>
                 <?php if($fellow['teamId'] == $game['teamId']): ?>
-                <img class="champ-fellow-square" src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($fellow['championId'], $realm); ?>" alt="champ" />
+                <a href="<? echo $this->url(array('region' => $this->region, 'id' => $fellow['summonerId']),"summoner",true); ?>"><img class="champ-fellow-square" src="<?php echo $this->baseUrl() . $championMapper->getChampionSquareImg($fellow['championId'], $realm); ?>" alt="champ" /></a>
                 <?php endif; ?>
                 <?php endforeach; ?>
             </td>

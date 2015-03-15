@@ -63,11 +63,6 @@ class Application_Model_ChampionMapper {
             if (!$this->saveImage($champ, $n, $realm)) {
                 return '';
             }
-        } else {
-            unlink(PATH_UPLOAD . "skins/" . $champ['key'] . "_$n.jpg");
-            if (!$this->saveImage($champ, $n, $realm)) {
-                return '';
-            }
         }
         return "/upload/skins/" . $champ['key'] . "_$n.jpg";
     }

@@ -28,6 +28,10 @@ class ChampionsController extends GeneralController {
     }
 
     public function detailAction() {
+        /*
+         * @TODO adicionar itens recomendados
+         * @TODO adicionar dicas
+         */
         if ($this->_hasParam('id')) {
             $id = $this->getIdUrl($this->_getParam('id'));
         } else {
@@ -46,10 +50,14 @@ class ChampionsController extends GeneralController {
                 $this->view->lastGames = $games;
             else
                 $this->view->lastGames = array();
+            
+            $this->view->region = $sumSession->region;
+            $this->view->sumId = $sumSession->id;
         } else {
             $this->view->lastGames = array();
         }
 
+        // @TODO verificar duplicacao de spell mapper
         $this->view->spellMapper = new Application_Model_SpellMapper();
     }
 
